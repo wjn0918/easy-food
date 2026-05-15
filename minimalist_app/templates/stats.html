@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>菜品统计</title>
+  <style>
+    body { font-family: sans-serif; max-width: 980px; margin: 20px auto; padding: 0 12px; }
+    table { width: 100%; border-collapse: collapse; }
+    th,td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    .nav a { margin-right: 8px; }
+  </style>
+</head>
+<body>
+  <h1>按菜品统计（{{ '每周' if period == 'week' else '每月' }}）</h1>
+  <div class="nav">
+    <a href="/">返回日历</a>
+    <a href="/stats?period=week">每周统计</a>
+    <a href="/stats?period=month">每月统计</a>
+  </div>
+
+  {% if rows %}
+  <table>
+    <thead><tr><th>周期</th><th>菜品</th><th>次数</th></tr></thead>
+    <tbody>
+      {% for row in rows %}
+      <tr><td>{{ row.period }}</td><td>{{ row.dish }}</td><td>{{ row.count }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p>暂无可统计数据。</p>
+  {% endif %}
+</body>
+</html>
