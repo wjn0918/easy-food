@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>极简菜谱日历</title>
+  <style>
+    body { font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif; max-width: 980px; margin: 20px auto; padding: 0 12px; }
+    h1 { margin-bottom: 8px; }
+    .card { border: 1px solid #ddd; border-radius: 10px; padding: 16px; margin-bottom: 16px; }
+    .grid { display: grid; grid-template-columns: 120px 1fr; gap: 8px; align-items: center; }
+    select,input,button { padding: 8px; }
+    table { width: 100%; border-collapse: collapse; }
+    th,td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    .nav a { margin-right: 8px; }
+  </style>
+</head>
+<body>
+  <h1>极简菜谱日历</h1>
+  <div class="nav">
+    <a href="/">日历记录</a>
+    <a href="/stats?period=week">每周统计</a>
+    <a href="/stats?period=month">每月统计</a>
+  </div>
+
+  <div class="card">
+    <h2>新增/修改某日三餐</h2>
+    <form method="post" action="/save">
+      <div class="grid">
+        <label>日期</label>
+        <input type="date" name="date" value="{{ selected_date or default_date }}" required />
+
+        <label>早餐</label>
+        <select name="早餐">
+          <option value="">(空)</option>
+          {% for dish in dishes['早餐'] %}
+            <option value="{{ dish }}" {% if record and record.get('早餐') == dish %}selected{% endif %}>{{ dish }}</option>
+          {% endfor %}
+        </select>
+
+        <label>午餐</label>
+        <select name="午餐">
+          <option value="">(空)</option>
+          {% for dish in dishes['午餐'] %}
+            <option value="{{ dish }}" {% if record and record.get('午餐') == dish %}selected{% endif %}>{{ dish }}</option>
+          {% endfor %}
+        </select>
+
+        <label>晚餐</label>
+        <select name="晚餐">
+          <option value="">(空)</option>
+          {% for dish in dishes['晚餐'] %}
+            <option value="{{ dish }}" {% if record and record.get('晚餐') == dish %}selected{% endif %}>{{ dish }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <p><button type="submit">保存</button></p>
+    </form>
+  </div>
+
+  <div class="card">
+    <h2>菜谱日历</h2>
+    {% if calendar_rows %}
+      <table>
+        <thead>
+          <tr><th>日期</th><th>早餐</th><th>午餐</th><th>晚餐</th></tr>
+        </thead>
+        <tbody>
+          {% for row in calendar_rows %}
+            <tr>
+              <td><a href="/?date={{ row['date'] }}">{{ row['date'] }}</a></td>
+              <td>{{ row['早餐'] }}</td>
+              <td>{{ row['午餐'] }}</td>
+              <td>{{ row['晚餐'] }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>暂无记录。</p>
+    {% endif %}
+  </div>
+</body>
+</html>
