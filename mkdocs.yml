@@ -1,0 +1,27 @@
+site_name: 菜谱
+
+theme:
+  name: material
+  docs_dir: ./
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    # - navigation.expand # 是否自动展开导航栏
+    - navigation.indexes
+    - toc.integrate # 设置导航在左侧
+    - content.code.copy
+    - content.tabs.link
+
+plugins:
+  - awesome-pages
+  - search
+  - glightbox
+
+# extra_css:
+#   - css/extra.css
+
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences

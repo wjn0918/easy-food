@@ -1,0 +1,12 @@
+site/
+*.zip
+*.tar.gz
+*.rar
+*.xls
+*.rpm
+*.doc
+*.xlsx
+*.docx
+*.pdf
+.cache/
+*.cache
